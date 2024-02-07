@@ -158,7 +158,8 @@ const loginUser = async (req: Request, res: Response) => {
             // console.log(refresh_token)
             res.cookie("token", access_token, {
                 httpOnly: true,
-                maxAge: 24 * 60 * 60 * 1000
+                maxAge: 24 * 60 * 60 * 1000,
+                secure: process.env.NODE_ENV === 'production',
             })
 
             return res.status(200).json({
@@ -244,7 +245,8 @@ const loginUserWithInvitation = async (req: Request, res: Response) => {
             // Set token as a cookie with HttpOnly flag and limited max age
             res.cookie('token', access_token, {
                 httpOnly: true,
-                maxAge: 3 * 60 * 1000, // 3 minutes
+                maxAge: 24 * 60 * 60 * 1000,
+                secure: process.env.NODE_ENV === 'production',
             });
 
             // Respond with user details and access token
