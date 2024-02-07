@@ -8,6 +8,7 @@ const createDirectChat = async(req: Request, res: Response) => {
     
     const {members, workspace_id} = req.body;
 
+    // I generate space_id anytime I am creating a direct chat between two users
     const space_id = await generateDirectChatId()
 
     const existingDirectChat = await DirectChat.findOne(req.body)
@@ -57,6 +58,9 @@ const getADirectChatObjUsingRoomId = async(req: Request, res: Response) => {
 // Creates a direct chat message between 2 users. it takes senderId, direct_chat_id and message body
 const createDirectMessage = async(req: Request, res: Response) => { 
     const { sender_id, direct_chat_id, message_body, username } = req.body;
+
+    // The direct_chat_id is the same as the space_id. i.e when you click a user in the direct chat from the frontend I get the space_id and pass it
+    // to the backend to create a direct message. This is because the space_id is the same as the direct_chat_id.
     const newDirectMessage = new DirectMessage({sender_id, direct_chat_id, message_body, username})
 
     try {

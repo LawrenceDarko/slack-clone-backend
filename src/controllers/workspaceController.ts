@@ -1,16 +1,32 @@
 import { Request, Response } from 'express';
 import Workspace from '../models/WorkSpace';
 import UserWorkspace from '../models/UserWorkspace';
+import Channel from '../models/Channel';
+import { generateChannelId } from '../helpers/generateAChannelId';
 
 const createWorkspace = async(req: Request, res: Response) => {
 
     const { name, description, created_by } = req.body
+    const space_id = await generateChannelId()
 
     const newWorkspace = new Workspace({name, description, created_by})
     try {
         const savedWorkspace = await newWorkspace.save()
 
         await UserWorkspace.create({user: created_by, workspace: savedWorkspace._id})
+
+        // Create the 'genera' channel in the workspace
+        const generalChannel = new Channel({
+            name: 'general',
+            workspace_id: savedWorkspace._id,
+            members: [created_by], // Add the creator as the first member
+            created_by,
+            space_id,
+            access_type: 'public',
+        });
+
+        const savedGeneraChannel = await generalChannel.save();
+        
         res.status(200).json({status: 'success', data: savedWorkspace, message: 'Workpace created Successfully'})
     } catch (error) {
         res.status(400).json(error)

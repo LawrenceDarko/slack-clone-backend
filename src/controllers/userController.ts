@@ -8,6 +8,8 @@ import nodemailer from 'nodemailer';
 import dotevn from 'dotenv'
 import Invitation from '../models/Invitation';
 import UserWorkspace from '../models/UserWorkspace';
+import Channel from '../models/Channel';
+import { generateChannelId } from '../helpers/generateAChannelId';
 
 dotevn.config()
 
@@ -205,6 +207,22 @@ const loginUserWithInvitation = async (req: Request, res: Response) => {
             console.log("INVITATION", invitation)
             invitation.accepted = true;
             await invitation.save();
+        }
+
+        // Fetch all public channels in the specified workspace
+        const publicChannels = await Channel.find({ workspace_id, access_type: 'public' });
+
+        // Iterate through public channels and add the user to them if not already a member
+        for (const publicChannel of publicChannels) {
+            const { members } = publicChannel;
+
+            if (!members.includes(user._id)) {
+                // Add the user to the channel members
+                members.push(user._id);
+
+                // Update the channel with the new members
+                await Channel.findByIdAndUpdate(publicChannel._id, { members });
+            }
         }
 
 
