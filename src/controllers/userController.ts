@@ -160,7 +160,7 @@ const loginUser = async (req: Request, res: Response) => {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000,
                 secure: process.env.NODE_ENVIRONMENT === 'production',
-                sameSite: 'none',
+                sameSite: 'lax',
                 domain: 'https://slack-clone-frontend-bice.vercel.app',
             })
 
