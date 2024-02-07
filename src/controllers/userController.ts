@@ -157,7 +157,7 @@ const loginUser = async (req: Request, res: Response) => {
 
             // console.log(refresh_token)
             res.cookie("token", access_token, {
-                httpOnly: false,
+                httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000
             })
 
