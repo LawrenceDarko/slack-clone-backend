@@ -29,8 +29,6 @@ app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 
 
-
-
 app.use('/api/users', userRoutes);
 app.use('/api/workspace', protect, workspaceRoutes);
 app.use('/api/channels', protect, channelRoutes);
