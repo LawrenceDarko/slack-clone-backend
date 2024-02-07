@@ -159,7 +159,8 @@ const loginUser = async (req: Request, res: Response) => {
             res.cookie("token", access_token, {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000,
-                secure: true
+                secure: process.env.NODE_ENVIRONMENT === 'production',
+                sameSite: 'none'
             })
 
             return res.status(200).json({
@@ -247,6 +248,7 @@ const loginUserWithInvitation = async (req: Request, res: Response) => {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000,
                 secure: process.env.NODE_ENVIRONMENT === 'production',
+                sameSite: 'none'
             });
 
             // Respond with user details and access token
