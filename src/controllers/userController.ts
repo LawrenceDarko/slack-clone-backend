@@ -156,13 +156,13 @@ const loginUser = async (req: Request, res: Response) => {
             // const refresh_token = generateRefreshToken(user._id)
 
             // console.log(refresh_token)
-            res.cookie("token", access_token, {
-                httpOnly: true,
-                maxAge: 24 * 60 * 60 * 1000,
-                secure: process.env.NODE_ENVIRONMENT === 'production',
-                // sameSite: 'none',
-                // domain: 'https://slack-clone-frontend-bice.vercel.app',
-            })
+            // res.cookie("token", access_token, {
+            //     httpOnly: true,
+            //     maxAge: 24 * 60 * 60 * 1000,
+            //     secure: process.env.NODE_ENVIRONMENT === 'production',
+            //     // sameSite: 'none',
+            //     // domain: 'https://slack-clone-frontend-bice.vercel.app',
+            // })
 
             return res.status(200).json({
                 status: 'success',
@@ -245,12 +245,12 @@ const loginUserWithInvitation = async (req: Request, res: Response) => {
             await UserWorkspace.create({ user: user._id, workspace: workspace_id });
 
             // Set token as a cookie with HttpOnly flag and limited max age
-            res.cookie('token', access_token, {
-                httpOnly: true,
-                maxAge: 24 * 60 * 60 * 1000,
-                secure: process.env.NODE_ENVIRONMENT === 'production',
-                // sameSite: 'none'
-            });
+            // res.cookie('token', access_token, {
+            //     httpOnly: true,
+            //     maxAge: 24 * 60 * 60 * 1000,
+            //     secure: process.env.NODE_ENVIRONMENT === 'production',
+            //     // sameSite: 'none'
+            // });
 
             // Respond with user details and access token
             return res.status(200).json({
