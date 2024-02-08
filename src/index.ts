@@ -21,7 +21,7 @@ const server = http.createServer(app);
 
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://slack-clone-frontend-bice.vercel.app'],
+    origin: ['http://localhost:3000', 'https://slack-clone-frontend.onrender.com'],
     credentials: true,
 }));
 
@@ -47,7 +47,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 // Socket Implementation
 const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:3000', 'https://slack-clone-frontend-bice.vercel.app'],
+        origin: ['http://localhost:3000', 'https://slack-clone-frontend.onrender.com'],
         // methods: ['GET', 'POST'],
         credentials: true,
     },
